@@ -5,18 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, Upload, X } from "lucide-react";
 
 interface Step3Props {
-    name: string;
     goal: string;
-    onNameChange: (value: string) => void;
     onGoalChange: (value: string) => void;
     onNext: () => void;
     onBack: () => void;
 }
 
 export default function Step3Goal({
-    name,
     goal,
-    onNameChange,
     onGoalChange,
     onNext,
     onBack,
@@ -44,7 +40,7 @@ export default function Step3Goal({
         if (fileInputRef.current) fileInputRef.current.value = "";
     };
 
-    const isValid = name.trim().length > 1 && goal.trim().length > 5;
+    const isValid = goal.trim().length > 5;
 
     return (
         <div className="flex flex-col gap-6">
@@ -177,37 +173,6 @@ export default function Step3Goal({
                 />
             </div>
 
-            {/* Name input */}
-            <div className="flex flex-col gap-2">
-                <label htmlFor="client-name" className="text-sm font-medium" style={{ color: "#2D2A2B", fontFamily: "Inter, sans-serif" }}>
-                    👋 ¿Cuál es tu nombre?
-                </label>
-                <input
-                    id="client-name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => onNameChange(e.target.value)}
-                    placeholder="Ej: María González"
-                    className="w-full px-4 py-3.5 rounded-2xl border-2 text-sm outline-none transition-all duration-200"
-                    style={{
-                        borderColor: name ? "#D22A82" : "rgba(0,0,0,0.1)",
-                        fontFamily: "Inter, sans-serif",
-                        color: "#2D2A2B",
-                        backgroundColor: "#ffffff",
-                        boxShadow: name ? "0 0 0 3px rgba(210, 42, 130, 0.1)" : "none",
-                    }}
-                    onFocus={e => {
-                        e.currentTarget.style.borderColor = "#D22A82";
-                        e.currentTarget.style.boxShadow = "0 0 0 3px rgba(210, 42, 130, 0.1)";
-                    }}
-                    onBlur={e => {
-                        if (!name) {
-                            e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)";
-                            e.currentTarget.style.boxShadow = "none";
-                        }
-                    }}
-                />
-            </div>
 
             {/* Navigation */}
             <div className="flex gap-3">

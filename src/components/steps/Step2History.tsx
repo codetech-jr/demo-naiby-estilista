@@ -7,7 +7,11 @@ import { ChevronRight, ChevronLeft, Upload, X, Check, Image as ImageIcon } from 
 type HistoryOption = "Virgen" | "Tinte Oscuro/Negro" | "Keratina/Alisado" | "Decoloración";
 
 interface Step2Props {
+    name: string;
+    phone: string;
     selected: string[];
+    onNameChange: (value: string) => void;
+    onPhoneChange: (value: string) => void;
     onToggle: (item: HistoryOption) => void;
     onNext: () => void;
     onBack: () => void;
@@ -48,7 +52,7 @@ const historyOptions: {
         },
     ];
 
-export default function Step2History({ selected, onToggle, onNext, onBack }: Step2Props) {
+export default function Step2History({ name, phone, selected, onNameChange, onPhoneChange, onToggle, onNext, onBack }: Step2Props) {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -226,6 +230,71 @@ export default function Step2History({ selected, onToggle, onNext, onBack }: Ste
                 />
             </div>
 
+            {/* Lead Capture Inputs */}
+            <div className="flex flex-col gap-4 mt-2">
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="client-name" className="text-sm font-medium" style={{ color: "#2D2A2B", fontFamily: "Inter, sans-serif" }}>
+                        👋 ¿Cuál es tu nombre? *
+                    </label>
+                    <input
+                        id="client-name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => onNameChange(e.target.value)}
+                        placeholder="Ej: María González"
+                        className="w-full px-4 py-3.5 rounded-2xl border-2 text-sm outline-none transition-all duration-200"
+                        style={{
+                            borderColor: name ? "#D22A82" : "rgba(0,0,0,0.1)",
+                            fontFamily: "Inter, sans-serif",
+                            color: "#2D2A2B",
+                            backgroundColor: "#ffffff",
+                            boxShadow: name ? "0 0 0 3px rgba(210, 42, 130, 0.1)" : "none",
+                        }}
+                        onFocus={e => {
+                            e.currentTarget.style.borderColor = "#D22A82";
+                            e.currentTarget.style.boxShadow = "0 0 0 3px rgba(210, 42, 130, 0.1)";
+                        }}
+                        onBlur={e => {
+                            if (!name) {
+                                e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)";
+                                e.currentTarget.style.boxShadow = "none";
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="client-phone" className="text-sm font-medium" style={{ color: "#2D2A2B", fontFamily: "Inter, sans-serif" }}>
+                        📱 Tu número de WhatsApp *
+                    </label>
+                    <input
+                        id="client-phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => onPhoneChange(e.target.value)}
+                        placeholder="+58 412 1234567"
+                        className="w-full px-4 py-3.5 rounded-2xl border-2 text-sm outline-none transition-all duration-200"
+                        style={{
+                            borderColor: phone ? "#D22A82" : "rgba(0,0,0,0.1)",
+                            fontFamily: "Inter, sans-serif",
+                            color: "#2D2A2B",
+                            backgroundColor: "#ffffff",
+                            boxShadow: phone ? "0 0 0 3px rgba(210, 42, 130, 0.1)" : "none",
+                        }}
+                        onFocus={e => {
+                            e.currentTarget.style.borderColor = "#D22A82";
+                            e.currentTarget.style.boxShadow = "0 0 0 3px rgba(210, 42, 130, 0.1)";
+                        }}
+                        onBlur={e => {
+                            if (!phone) {
+                                e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)";
+                                e.currentTarget.style.boxShadow = "none";
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+
             {/* Navigation */}
             <div className="flex gap-3">
                 <button
@@ -245,11 +314,12 @@ export default function Step2History({ selected, onToggle, onNext, onBack }: Ste
                 <button
                     id="step2-next-button"
                     onClick={onNext}
-                    className="flex-[2] py-4 px-6 rounded-2xl text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-300"
+                    disabled={!name.trim() || !phone.trim() || selected.length === 0}
+                    className="flex-[2] py-4 px-6 rounded-2xl text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
                     style={{
-                        backgroundColor: "#D22A82",
+                        backgroundColor: (name.trim() && phone.trim() && selected.length > 0) ? "#D22A82" : "#ccc",
                         fontFamily: "Inter, sans-serif",
-                        boxShadow: "0 6px 24px rgba(210, 42, 130, 0.35)"
+                        boxShadow: (name.trim() && phone.trim() && selected.length > 0) ? "0 6px 24px rgba(210, 42, 130, 0.35)" : "none"
                     }}
                 >
                     Siguiente

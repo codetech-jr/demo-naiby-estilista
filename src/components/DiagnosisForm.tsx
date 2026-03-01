@@ -13,6 +13,7 @@ type HistoryOption = "Virgen" | "Tinte Oscuro/Negro" | "Keratina/Alisado" | "Dec
 
 interface FormData {
     name: string;
+    phone: string;
     length: LengthOption;
     history: string[];
     goal: string;
@@ -47,12 +48,27 @@ export default function DiagnosisForm() {
     const [direction, setDirection] = useState(1);
     const [formData, setFormData] = useState<FormData>({
         name: "",
+        phone: "",
         length: "",
         history: [],
         goal: "",
     });
 
     const goNext = () => {
+        if (currentStep === 2 && formData.name && formData.phone) {
+            // Silently capture partial lead
+            fetch("/api/webhook", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: formData.name,
+                    phone: formData.phone,
+                    step: currentStep,
+                    history: formData.history,
+                }),
+            }).catch((err) => console.error("Webhook failed:", err));
+        }
+
         setDirection(1);
         setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
     };
@@ -77,6 +93,10 @@ export default function DiagnosisForm() {
 
     const setName = (name: string) => {
         setFormData((prev) => ({ ...prev, name }));
+    };
+
+    const setPhone = (phone: string) => {
+        setFormData((prev) => ({ ...prev, phone }));
     };
 
     const setGoal = (goal: string) => {
@@ -171,7 +191,11 @@ export default function DiagnosisForm() {
                                 )}
                                 {currentStep === 2 && (
                                     <Step2History
+                                        name={formData.name}
+                                        phone={formData.phone}
                                         selected={formData.history}
+                                        onNameChange={setName}
+                                        onPhoneChange={setPhone}
                                         onToggle={toggleHistory}
                                         onNext={goNext}
                                         onBack={goBack}
@@ -179,9 +203,7 @@ export default function DiagnosisForm() {
                                 )}
                                 {currentStep === 3 && (
                                     <Step3Goal
-                                        name={formData.name}
                                         goal={formData.goal}
-                                        onNameChange={setName}
                                         onGoalChange={setGoal}
                                         onNext={goNext}
                                         onBack={goBack}
@@ -191,6 +213,7 @@ export default function DiagnosisForm() {
                                     <Step4Summary
                                         formData={{
                                             name: formData.name,
+                                            phone: formData.phone,
                                             length: formData.length,
                                             history: formData.history,
                                             goal: formData.goal,

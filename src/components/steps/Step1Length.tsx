@@ -96,7 +96,10 @@ export default function Step1Length({ selected, onSelect, onNext }: Step1Props) 
                             key={option.value}
                             variants={itemVariants}
                             id={`length-option-${option.value.toLowerCase().replace(" ", "-")}`}
-                            onClick={() => onSelect(option.value)}
+                            onClick={() => {
+                                onSelect(option.value);
+                                setTimeout(() => onNext(), 350); // Auto-advance with visual delay
+                            }}
                             className="relative flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all duration-250 text-center group"
                             style={{
                                 backgroundColor: isSelected ? "rgba(210, 42, 130, 0.06)" : "#ffffff",
@@ -142,23 +145,6 @@ export default function Step1Length({ selected, onSelect, onNext }: Step1Props) 
                 })}
             </motion.div>
 
-            <motion.button
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: selected ? 1 : 0.4, y: 0 }}
-                transition={{ duration: 0.4 }}
-                id="step1-next-button"
-                onClick={onNext}
-                disabled={!selected}
-                className="w-full py-4 px-8 rounded-2xl text-white font-semibold text-base flex items-center justify-center gap-2 transition-all duration-300 disabled:cursor-not-allowed"
-                style={{
-                    backgroundColor: selected ? "#D22A82" : "#ccc",
-                    fontFamily: "Inter, sans-serif",
-                    boxShadow: selected ? "0 6px 24px rgba(210, 42, 130, 0.35)" : "none"
-                }}
-            >
-                Siguiente
-                <ChevronRight size={20} />
-            </motion.button>
         </div>
     );
 }

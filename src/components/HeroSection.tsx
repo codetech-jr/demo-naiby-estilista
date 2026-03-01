@@ -69,21 +69,25 @@ export default function HeroSection() {
                     </div>
                 </motion.div>
 
-                {/* Name tag */}
+                {/* Name tag & Location */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.25 }}
-                    className="flex flex-col items-center gap-1"
+                    className="flex flex-col items-center gap-1.5 mt-2"
                 >
-                    <p className="text-sm font-medium tracking-widest uppercase"
+                    <h2 className="text-sm font-bold tracking-widest uppercase"
+                        style={{ color: "#2D2A2B", fontFamily: "Inter, sans-serif" }}>
+                        NAIBY OSUNA
+                    </h2>
+                    <p className="text-[11px] md:text-xs tracking-wider uppercase font-medium text-center"
                         style={{ color: "#D22A82", fontFamily: "Inter, sans-serif" }}>
-                        Naiby Osuna
+                        COLORISTA PREMIUM · ESPECIALISTA EN BALAYAGE
                     </p>
-                    <p className="text-xs tracking-wider uppercase"
-                        style={{ color: "#6B7280", fontFamily: "Inter, sans-serif" }}>
-                        Colorista Premium · Especialista en Balayage
-                    </p>
+                    <div className="flex items-center justify-center gap-1.5 mt-2 text-xs md:text-sm px-4 py-1.5 rounded-full border shadow-sm"
+                        style={{ color: "#4B5563", fontFamily: "Inter, sans-serif", backgroundColor: "#ffffff", borderColor: "rgba(210, 42, 130, 0.15)" }}>
+                        <span>📍</span> Atendiendo exclusivamente en Charallave, Miranda, Venezuela.
+                    </div>
                 </motion.div>
 
                 {/* Headline */}
@@ -93,10 +97,10 @@ export default function HeroSection() {
                     transition={{ duration: 0.7, delay: 0.3 }}
                     className="flex flex-col gap-4"
                 >
-                    <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl font-bold leading-tight"
+                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
                         style={{ color: "#2D2A2B", fontFamily: "'Playfair Display', serif" }}>
                         Consigue el Balayage<br />
-                        <em style={{ color: "#D22A82" }}>de tus Sueños.</em>
+                        <em style={{ color: "#D22A82", fontStyle: "italic" }}>de tus Sueños.</em>
                     </h1>
                     <p className="text-base md:text-lg leading-relaxed max-w-sm mx-auto"
                         style={{ color: "#6B7280", fontFamily: "Inter, sans-serif" }}>
@@ -150,7 +154,7 @@ export default function HeroSection() {
                             (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
                         }}
                     >
-                        <Sparkles size={20} />
+                        <span>✨</span>
                         Iniciar Diagnóstico Gratuito
                         <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </button>

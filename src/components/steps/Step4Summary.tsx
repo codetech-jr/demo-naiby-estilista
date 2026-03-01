@@ -5,6 +5,7 @@ import { ChevronLeft, User, Ruler, FlaskConical, Target, MessageCircle } from "l
 
 interface FormData {
     name: string;
+    phone: string;
     length: "Corto" | "Mediano" | "Largo" | "Extra Largo" | "";
     history: string[];
     goal: string;
@@ -25,6 +26,7 @@ function buildWhatsAppMessage(data: FormData): string {
     const message =
         `¡Hola Naiby! 👋 He completado el pre-diagnóstico en tu web.\n` +
         `\n*Mi Nombre:* ${data.name}` +
+        `\n*Mi WhatsApp:* ${data.phone}` +
         `\n*Largo:* ${data.length}` +
         `\n*Historial químico:* ${historyText}` +
         `\n*Mi meta:* ${data.goal}\n` +
@@ -37,6 +39,9 @@ function buildWhatsAppMessage(data: FormData): string {
 const summaryRows = [
     {
         icon: <User size={16} />, label: "Nombre", key: "name" as keyof FormData
+    },
+    {
+        icon: <span className="text-sm">📱</span>, label: "Teléfono", key: "phone" as keyof FormData
     },
     {
         icon: <Ruler size={16} />, label: "Largo de cabello", key: "length" as keyof FormData
